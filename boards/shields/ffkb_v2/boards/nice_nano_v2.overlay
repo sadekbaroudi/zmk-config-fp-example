@@ -1,0 +1,19 @@
+// Add this file here if you want to override or add anything that is specific to the controller being 
+// used. The name of the file should match the board name being used to compile
+
+/**
+ * In the default ffkb implementation, we use an LED data pin
+ * In this ffkb v2 build, I didn't use leds, and instead hand wired that pin to a cirque i2c
+ * So, I will disable spi3, which is used for leds, so I can use the cirque instead
+ */
+&spi3 {
+    // Disable spi3
+    status = "disabled";
+};
+
+/ {
+    chosen {
+        // Not needed, but just to demonstrate that you can remove a property from a parent device tree
+        /delete-property/ zmk,underglow;
+    };
+};
