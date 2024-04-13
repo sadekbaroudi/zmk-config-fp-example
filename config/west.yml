@@ -1,19 +1,20 @@
 manifest:
   remotes:
-    # - name: zmkfirmware
-    #   url-base: https://github.com/zmkfirmware
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
     - name: sadekbaroudi
       url-base: https://github.com/sadekbaroudi
+    # Note: Don't include petejohanson below if you aren't doing a one off cirque build
+    # If using vik_cirque_i2c or vik_cirque_spi, you don't need this as well
+    - name: petejohanson
+      url-base: https://github.com/petejohanson
   projects:
-    # - name: zmk
-    #   remote: zmkfirmware
-    #   revision: main
-    #   import: app/west.yml
     - name: zmk-fingerpunch-keyboards
       remote: sadekbaroudi
       revision: main
       import: config/west.yml
+    # Note: Don't include the cirque-input-module if you aren't doing a one off cirque build
+    # If using vik_cirque_i2c or vik_cirque_spi, you don't need this as well
+    - name: cirque-input-module
+      remote: petejohanson
+      revision: main
   self:
     path: config
