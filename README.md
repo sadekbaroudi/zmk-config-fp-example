@@ -5,7 +5,7 @@ This repository serves as an example for extending the base fingerpunch keyboard
 Steps to create a similar set up:
 1) Go to https://github.com/zmkfirmware/unified-zmk-config-template and click "Use this template", and "Create a new repository"
 2) Choose a name for your repository
-3) Copy the contents of the `config/west.yml` in this repository into the same file in your new repository
+3) Copy the contents of the `config/west.yml` in this repository into the same file in your new repository. Please review the comments in that file to see if you want to make any changes.
 4) Copy the keymap of your choice from the appropriate [zmk-fingerpunch-keyboards shield](https://github.com/sadekbaroudi/zmk-fingerpunch-keyboards/tree/main/boards/shields) for your keyboard
 5) Modify your keymap
 6) Update `build.yml` in your repo to build the keyboard with the controller of your choice. You can use any zmk supported controller, or one of the fingerpunch controllers found in the [zmk-fingerpunch-controllers boards](https://github.com/sadekbaroudi/zmk-fingerpunch-controllers/tree/main/boards/arm).

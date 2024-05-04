@@ -1,20 +1,28 @@
 manifest:
   remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
     - name: sadekbaroudi
       url-base: https://github.com/sadekbaroudi
-    # Note: Don't include petejohanson below if you aren't doing a one off cirque build
-    # If using vik_cirque_i2c or vik_cirque_spi, you don't need this as well
+    # Note: This is only included because the feat/pointers-move-scroll isn't merged into
+    #       ZMK main yet. Once it's merged, you no longer need this.
     - name: petejohanson
       url-base: https://github.com/petejohanson
   projects:
+    - name: zmk
+      remote: petejohanson
+      revision: feat/pointers-move-scroll
+      import: app/west.yml
+    # Replace the one above with the commented one below when that branch gets merged
+    # into ZMK main, or if you're not using pointing devices for your build.
+    # Alternatively, you can use your own zmk fork/branch if you are maintaining one.
+    # - name: zmk
+    #   remote: zmkfirmware
+    #   revision: main
+    #   import: app/west.yml
     - name: zmk-fingerpunch-keyboards
       remote: sadekbaroudi
       revision: main
-      import: config/west.yml
-    # Note: Don't include the cirque-input-module if you aren't doing a one off cirque build
-    # If using vik_cirque_i2c or vik_cirque_spi, you don't need this as well
-    - name: cirque-input-module
-      remote: petejohanson
-      revision: main
+      import: config/deps.yml
   self:
     path: config
