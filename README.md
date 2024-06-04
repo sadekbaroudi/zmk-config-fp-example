@@ -9,7 +9,7 @@ Steps to create a similar set up:
 4) Copy the keymap of your choice from the appropriate [zmk-fingerpunch-keyboards shield](https://github.com/sadekbaroudi/zmk-fingerpunch-keyboards/tree/main/boards/shields) for your keyboard
 5) Modify your keymap
 6) Update `build.yml` in your repo to build the keyboard with the controller of your choice. You can use any zmk supported controller, or one of the fingerpunch controllers found in the [zmk-fingerpunch-controllers boards](https://github.com/sadekbaroudi/zmk-fingerpunch-controllers/tree/main/boards/arm).
-7) Note: You can look at the [zmk-fingerpunch-keyboards build.yml](https://github.com/sadekbaroudi/zmk-fingerpunch-keyboards/tree/main/build.yml) to see all sorts of tested build combinations
+7) Note: You can look at the [zmk-fingerpunch-keyboards build.yml](https://github.com/sadekbaroudi/zmk-fingerpunch-keyboards/blob/main/build.yaml) to see all sorts of tested build combinations
 
 Commit your changes, and wait for the github actions run to complete. Your firmware is ready!
 
