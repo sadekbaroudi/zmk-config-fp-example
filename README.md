@@ -14,4 +14,14 @@ Steps to create a similar set up:
 Commit your changes, and wait for the github actions run to complete. Your firmware is ready!
 
 > [!NOTE]  
-> This example also includes adding a cirque trackpad, mostly to highlight a more complex example using the `ffkb_v2.conf` and `ffkb_v2.overlay`. It also includes using Pete's `cirque-input-module`, defined in the `config/west.yml`. If you're simply overriding a keymap, and otherwise building a fingerpunch board, with or without a [VIK module](https://github.com/sadekbaroudi/vik), then you don't need any of these things. This will likely be the case for most people using this guide.
+> This example also includes adding a cirque trackpad, mostly to highlight a more complex example using the `ffkb_v2.conf` and `ffkb_v2.overlay`, or the `rock_on_v1.conf` and `rock_on_v1.overlay`. It also includes using Pete's `cirque-input-module`, defined in the `config/west.yml`. If you're simply overriding a keymap, and otherwise building a fingerpunch board, with or without a [VIK module](https://github.com/sadekbaroudi/vik), then you don't need any of these things. This will likely be the case for most people using this guide.
+
+## example local build string
+
+### ffkb
+
+`west build --pristine -b "nice_nano_v2" -- -DSHIELD="ffkb_v2" -DZMK_CONFIG='/home/sadek/zmk-config-fp-example/config' -DZMK_EXTRA_MODULES='/home/sadek/zmk-fingerpunch-keyboards;/home/sadek/zmk-fingerpunch-controllers;/home/sadek/zmk-fingerpunch-vik;/home/sadek/cirque-input-module'`
+
+### rock on
+
+`west build --pristine -b "nice_nano_v2" -- -DSHIELD="rock_on_v1" -DZMK_CONFIG='/home/sadek/zmk-config-fp-example/config' -DZMK_EXTRA_MODULES='/home/sadek/zmk-fingerpunch-keyboards;/home/sadek/zmk-fingerpunch-controllers;/home/sadek/zmk-fingerpunch-vik;/home/sadek/cirque-input-module'`
