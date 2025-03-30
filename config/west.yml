@@ -6,20 +6,13 @@ manifest:
       url-base: https://github.com/sadekbaroudi
     # Note: This is only included because the feat/pointers-move-scroll isn't merged into
     #       ZMK main yet. Once it's merged, you no longer need this.
-    - name: petejohanson
-      url-base: https://github.com/petejohanson
+    #- name: petejohanson
+    #  url-base: https://github.com/petejohanson
   projects:
     - name: zmk
-      remote: petejohanson
-      revision: feat/pointers-move-scroll
+      remote: zmkfirmware
+      revision: v0.2.1
       import: app/west.yml
-    # Replace the one above with the commented one below when that branch gets merged
-    # into ZMK main, or if you're not using pointing devices for your build.
-    # Alternatively, you can use your own zmk fork/branch if you are maintaining one.
-    # - name: zmk
-    #   remote: zmkfirmware
-    #   revision: main
-    #   import: app/west.yml
     - name: zmk-fingerpunch-keyboards
       remote: sadekbaroudi
       revision: main
