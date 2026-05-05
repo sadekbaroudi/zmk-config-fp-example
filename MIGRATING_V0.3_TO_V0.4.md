@@ -54,10 +54,10 @@ Board names have changed. Update your `build.yaml`:
 
 | Old Board Name | New Board Name |
 |---|---|
-| `nice_nano_v2` | `nice_nano` |
-| `nice_nano` (v1) | `nice_nano@1` |
-| `seeeduino_xiao_ble` | `xiao_ble` |
-| `seeeduino_xiao_rp2040` | `xiao_rp2040` |
+| `nice_nano_v2` | `nice_nano//zmk` |
+| `nice_nano` (v1) | `nice_nano@1//zmk` |
+| `seeeduino_xiao_ble` | `xiao_ble//zmk` |
+| `seeeduino_xiao_rp2040` | `xiao_rp2040//zmk` |
 
 > **Note:** `seeeduino_xiao` (original SAMD21 XIAO) is unchanged.
 
@@ -72,7 +72,7 @@ include:
 
 # NEW:
 include:
-  - board: nice_nano
+  - board: nice_nano//zmk
     shield: ffkb_v2
 ```
 
@@ -105,6 +105,8 @@ If you have per-board overlay or config files in your `config/` directory (e.g.,
 | `seeeduino_xiao_rp2040.conf` | `xiao_rp2040.conf` |
 
 If you don't have any per-board files, skip this step.
+
+> **Note:** Per-board overlay/conf filenames do NOT use the `//zmk` suffix — only `build.yaml` board entries do.
 
 ---
 
