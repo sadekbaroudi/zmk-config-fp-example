@@ -58,10 +58,9 @@ Board names have changed. Update your `build.yaml`:
 | `nice_nano` (v1) | `nice_nano@1//zmk` |
 | `seeeduino_xiao_ble` | `xiao_ble//zmk` |
 | `seeeduino_xiao_rp2040` | `xiao_rp2040//zmk` |
+| `seeeduino_xiao` | `seeeduino_xiao//zmk` |
 
-> **Note:** `seeeduino_xiao` (original SAMD21 XIAO) is unchanged.
-
-> **Note:** Fingerpunch board names (`vikoto`, `svlinky`, `xivik`, `ffkb_holyiot_v1`, `pinkies_out_v3`, etc.) are unchanged.
+> **Note:** Fingerpunch board names (`vikoto`, `svlinky`, `xivik`, `ffkb_holyiot_v1`, `pinkies_out_v3`, etc.) are unchanged — they do not use the `//zmk` suffix.
 
 **Example:**
 ```yaml
