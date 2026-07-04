@@ -20,3 +20,5 @@
 include:
   - board: nice_nano//zmk
     shield: ffkb_v2
+  - board: nice_nano//zmk
+    shield: rock_on_v1

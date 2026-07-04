@@ -11,10 +11,11 @@
         reg = <0x2a>;
         status = "okay";
         // The aforementioned LED data pin that we're not using, hand wired to cirque DR
-        data-ready-gpios = <&gpio0 6 (GPIO_ACTIVE_HIGH)>;
+        dr-gpios = <&gpio0 6 (GPIO_ACTIVE_HIGH)>;
 
         sensitivity = "4x";
-        sleep-mode-enable;
+        sleep;
+        no-taps;
     };
 };
 
@@ -25,3 +26,4 @@
         // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
     };
 };
+
