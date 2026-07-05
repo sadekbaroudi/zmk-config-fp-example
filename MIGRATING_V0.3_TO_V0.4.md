@@ -93,19 +93,21 @@ jobs:
 
 ## Step 4: Rename Per-Board Overlay/Conf Files (if you have them)
 
-If you have per-board overlay or config files in your `config/` directory (e.g., `nice_nano_v2.conf`), rename them to match the new board names:
+If you have per-board overlay or config files in your `config/` directory (e.g., `nice_nano_v2.conf`), rename them to match the new **fully-qualified board identifier**. Under HWMv2, per-board files are matched against the qualified target with `/` replaced by `_` (e.g. `nice_nano//zmk` → `nice_nano_nrf52840_zmk`). A plain `nice_nano.overlay` will be **silently ignored**.
 
 | Old Filename | New Filename |
 |---|---|
-| `nice_nano_v2.overlay` | `nice_nano.overlay` |
-| `nice_nano_v2.conf` | `nice_nano.conf` |
-| `nice_nano_v2.keymap` | `nice_nano.keymap` |
-| `seeeduino_xiao_ble.conf` | `xiao_ble.conf` |
-| `seeeduino_xiao_rp2040.conf` | `xiao_rp2040.conf` |
+| `nice_nano_v2.overlay` | `nice_nano_nrf52840_zmk.overlay` |
+| `nice_nano_v2.conf` | `nice_nano_nrf52840_zmk.conf` |
+| `nice_nano_v2.keymap` | `nice_nano_nrf52840_zmk.keymap` |
+| `seeeduino_xiao_ble.conf` | `xiao_ble_zmk.conf` |
+| `seeeduino_xiao_rp2040.conf` | `xiao_rp2040_zmk.conf` |
 
 If you don't have any per-board files, skip this step.
 
-> **Note:** Per-board overlay/conf filenames do NOT use the `//zmk` suffix — only `build.yaml` board entries do.
+> **Tip:** If you're unsure of the exact qualified name, run a build and check the `-- Found BOARD.dts` / board identifier line in the output, or look at how the fingerpunch shields name their files under `boards/shields/<shield>/boards/`.
+
+> **Note:** The per-board *filenames* use the underscore-qualified form (`nice_nano_nrf52840_zmk`), NOT the `//zmk` form — the `//zmk` form is only used for `board:` entries in `build.yaml`.
 
 ---
 
@@ -123,7 +125,26 @@ If you have a directly-wired Cirque trackpad with a custom overlay (like the `ff
 | `x-invert` / `y-invert` (on Cirque node) | `invert-x` / `invert-y` |
 | `rotate-90` (on Cirque node) | `swap-xy` |
 
-> **Important:** The `xy-swap`, `y-invert`, and `x-invert` properties on the `zmk,input-listener` node are **unchanged** — those are ZMK properties, not Cirque driver properties.
+> **Important:** In ZMK v0.4 the axis swap/invert properties on the `zmk,input-listener` node (`xy-swap`, `y-invert`, `x-invert`) **no longer exist** — they moved to **input processors**. If you leave them on the listener node they are *silently ignored* (the build still succeeds), so your trackpad axes will be wrong. Replace them with an `input-processors` entry:
+>
+> ```dts
+> / {
+>     glidepoint_input {
+>         compatible = "zmk,input-listener";
+>         device = <&glidepoint>;
+>
+>         // OLD (v0.3, no longer works):
+>         //   xy-swap;
+>         //   y-invert;
+>         //   x-invert;
+>
+>         // NEW (v0.4):
+>         input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+>     };
+> };
+> ```
+>
+> Add `#include <input/processors.dtsi>` near the top of the overlay so `&zip_xy_transform` and the `INPUT_TRANSFORM_*` macros are available. Only include the flags you actually need (drop `INPUT_TRANSFORM_XY_SWAP` if you don't want to swap axes, etc.).
 
 > **Note:** `compatible = "cirque,pinnacle"` is still correct — no change needed.
 
@@ -165,10 +186,13 @@ If you see an error about undefined Kconfig symbols, you likely have `CONFIG_WS2
 Remove `cirque-input-module` from your `config/west.yml`. The Cirque Pinnacle driver is now part of Zephyr.
 
 ### Build fails with `nice_nano_v2` not found
-The board was renamed to `nice_nano` (v2 is now the default revision). Update your `build.yaml` and any per-board overlay filenames.
+The board was renamed to `nice_nano` (v2 is now the default revision); in `build.yaml` use `nice_nano//zmk`. For per-board files in `config/`, use the qualified filename `nice_nano_nrf52840_zmk.<ext>` (a plain `nice_nano.<ext>` is silently ignored).
 
 ### Build fails with `seeeduino_xiao_ble` not found
-The board was renamed to `xiao_ble`. Update your `build.yaml` and any per-board overlay filenames.
+The board was renamed to `xiao_ble`; in `build.yaml` use `xiao_ble//zmk`. For per-board files in `config/`, use `xiao_ble_zmk.<ext>`.
+
+### My trackpad works but the axes are swapped/inverted
+You likely still have `xy-swap` / `y-invert` / `x-invert` on the `zmk,input-listener` node. Those are ignored in v0.4 — move them to an `input-processors` entry (see Step 5).
 
 ### Linker errors: `undefined reference to retention_read/retention_write`
 This is a board-level issue (already fixed in the fingerpunch repos). If you see this on a custom board, add `imply RETAINED_MEM`, `imply RETENTION`, and `imply RETENTION_BOOT_MODE` to your board's Kconfig file.
