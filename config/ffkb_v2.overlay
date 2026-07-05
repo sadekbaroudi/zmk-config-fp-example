@@ -2,6 +2,9 @@
 #include <dt-bindings/zmk/input_transform.h>
 #include <dt-bindings/input/input-event-codes.h>
 
+// Required for the &zip_xy_transform input processor and the INPUT_TRANSFORM_* macros
+#include <input/processors.dtsi>
+
 // In this case, we added a cirque trackpad using the pro micro position i2c pins and a hand wired data ready pin
 &pro_micro_i2c {
     status = "okay";
@@ -11,11 +14,10 @@
         reg = <0x2a>;
         status = "okay";
         // The aforementioned LED data pin that we're not using, hand wired to cirque DR
-        dr-gpios = <&gpio0 6 (GPIO_ACTIVE_HIGH)>;
+        data-ready-gpios = <&gpio0 6 (GPIO_ACTIVE_HIGH)>;
 
         sensitivity = "4x";
-        sleep;
-        no-taps;
+        sleep-mode-enable;
     };
 };
 
@@ -23,6 +25,8 @@
     glidepoint_listener {
         compatible = "zmk,input-listener";
         device = <&glidepoint>;
-        // input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
+        // ZMK v0.4: axis swap/invert moved from listener properties
+        // (xy-swap / y-invert / x-invert) to input processors.
+        input-processors = <&zip_xy_transform (INPUT_TRANSFORM_XY_SWAP | INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>;
     };
 };
